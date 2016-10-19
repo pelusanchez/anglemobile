@@ -46,12 +46,6 @@ function getAccel(a){
 		addMean(angleXY, angleXZ, angleYZ);
 		angleElm.innerHTML = "XY: "+redondea(angleXY)+", XZ:"+redondea(angleXZ)+", YZ:"+redondea(angleYZ);
 	}
-	if(quadro!== 0){
-		quadro.beginPath();
-		quadro.moveTo(50,50);
-		quadro.lineTo(50-x, 50-y);
-		quadro.stroke();
-	}
 }
 
 window.onload = function(){
