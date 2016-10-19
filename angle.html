@@ -8,11 +8,12 @@
 var angleElm = 0;
 var meanElm = 0;
 
-window.addEventListener("devicemotion", getAccel, true);
+
 
 function redondea(a){
-	Math.floor(a*100)/100;
+	return Math.floor(a*100)/100;
 }
+
 var mA = 0;
 var mB = 0;
 var mC = 0;
@@ -43,16 +44,19 @@ function getAccel(a){
 		var angleXY = Math.atan2(y,x)*180/Math.PI;
 		var angleXZ = Math.atan2(z,x)*180/Math.PI;
 		var angleYZ = Math.atan2(z,y)*180/Math.PI;
-		addMean(angleXY, angleXZ, angleYZ);
+
 		angleElm.innerHTML = "XY: "+redondea(angleXY)+", XZ:"+redondea(angleXZ)+", YZ:"+redondea(angleYZ);
+		addMean(angleXY, angleXZ, angleYZ);
 	}
 }
 
 window.onload = function(){
 	angleElm = document.getElementById("angle");
 	meanElm = document.getElementById("mean");
+	window.addEventListener("devicemotion", getAccel, true);
 
 }
+
 </script>
 </head>
 <body>
