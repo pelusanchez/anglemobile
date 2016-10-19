@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>angle</title>
+<script languaje="JavaScript">
+
+var angleElm = 0;
+var quadro = 0;
+
+window.addEventListener("devicemotion", getAccel, true);
+
+function getAccel(a){
+	if(angleElm!== 0){
+		var x = a.accelerationIncludingGravity.x;
+		var y = a.accelerationIncludingGravity.y;
+		var z = a.accelerationIncludingGravity.z;
+
+		//Normalize vectors:
+		var mod = Math.sqrt(x*x+y*y+z*z);
+		var angleXY = Math.atan2(y,x);
+		var angleXZ = Math.atan2(z,x);
+		var angleYZ = Math.atan2(z,y);
+		angleElm.innerHTML = "XY: "+angleXY+", XZ:"+angleXZ+", YZ:"+angleYZ;
+	}
+	if(quadro!== 0){
+		quadro.beginPath();
+		quadro.moveTo(50,50);
+		quadro.lineTo(50-x, 50-y);
+		quadro.stroke();
+	}
+}
+
+window.onload = function(){
+	angleElm = document.getElementById("angle");
+	quadro = document.getElementById("quadro").getContext("2d");
+
+}
+</script>
+</head>
+<body>
+	Result:<div id="angle">-</div>
+	<canvas id="quadro" width="400" height="400" style="position:absolute; top:20px; left:0px; width:400px; height:400px; border:1px solid #000000;"></canvas>
+</body>
+</html>
+
