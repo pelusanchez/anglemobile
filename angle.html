@@ -1,12 +1,36 @@
 <html>
 <head>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+
 <title>angle</title>
 <script languaje="JavaScript">
 
 var angleElm = 0;
-var quadro = 0;
+var meanElm = 0;
 
 window.addEventListener("devicemotion", getAccel, true);
+
+function redondea(a){
+	Math.floor(a*100)/100;
+}
+var mA = 0;
+var mB = 0;
+var mC = 0;
+var mi = 0;
+
+function reset(){
+	mA = 0;
+	mB = 0;
+	mC = 0;
+	mi = 0;
+}
+function addMean(a,b,c){
+	mA = mA*(mi)/(mi+1)+a/(mi+1);
+	mB = mB*(mi)/(mi+1)+b/(mi+1);
+	mC = mC*(mi)/(mi+1)+c/(mi+1);
+	mi++;
+	meanElm.innerHTML = "XY: "+redondea(mA)+", XZ:"+redondea(mB)+", YZ:"+redondea(mC);
+}
 
 function getAccel(a){
 	if(angleElm!== 0){
@@ -16,29 +40,25 @@ function getAccel(a){
 
 		//Normalize vectors:
 		var mod = Math.sqrt(x*x+y*y+z*z);
-		var angleXY = Math.atan2(y,x);
-		var angleXZ = Math.atan2(z,x);
-		var angleYZ = Math.atan2(z,y);
-		angleElm.innerHTML = "XY: "+angleXY+", XZ:"+angleXZ+", YZ:"+angleYZ;
-	}
-	if(quadro!== 0){
-		quadro.beginPath();
-		quadro.moveTo(50,50);
-		quadro.lineTo(50-x, 50-y);
-		quadro.stroke();
+		var angleXY = Math.atan2(y,x)*180/Math.PI;
+		var angleXZ = Math.atan2(z,x)*180/Math.PI;
+		var angleYZ = Math.atan2(z,y)*180/Math.PI;
+		addMean(angleXY, angleXZ, angleYZ);
+		angleElm.innerHTML = "XY: "+redondea(angleXY)+", XZ:"+redondea(angleXZ)+", YZ:"+redondea(angleYZ);
 	}
 }
 
 window.onload = function(){
 	angleElm = document.getElementById("angle");
-	quadro = document.getElementById("quadro").getContext("2d");
+	meanElm = document.getElementById("mean");
 
 }
 </script>
 </head>
 <body>
-	Result:<div id="angle">-</div>
-	<canvas id="quadro" width="400" height="400" style="position:absolute; top:20px; left:0px; width:400px; height:400px; border:1px solid #000000;"></canvas>
+	Result:<div id="angle">-</div><br>
+	Mean:<div id="mean"></div><br>
+	<button id="angle" onClick="reset();" value="Reset" >Reset</button>
 </body>
 </html>
 
