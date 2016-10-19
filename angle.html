@@ -27,7 +27,7 @@ function reset(){
 function addMean(a,b,c){
 	mA = mA*(mi)/(mi+1)+a/(mi+1);
 	mB = mB*(mi)/(mi+1)+b/(mi+1);
-	mC = mC*(mi)/(mi+1)+v/(mi+1);
+	mC = mC*(mi)/(mi+1)+c/(mi+1);
 	mi++;
 	meanElm.innerHTML = "XY: "+redondea(mA)+", XZ:"+redondea(mB)+", YZ:"+redondea(mC);
 }
